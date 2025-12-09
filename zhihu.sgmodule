@@ -50,7 +50,7 @@ URL-REGEX,^https:\/\/api\.zhihu\.com\/(bazaar\/float_window|market\/popovers_v2,
 URL-REGEX,^https:\/\/api\.zhihu\.com\/me\/guides,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/unlimited\/go\/my_card,REJECT
 # 搜索页 - 关键词、猜你想搜
-URL-REGEX,^https:\/\/api\.zhihu\.com\/search\/preset_words - reject-dict
+URL-REGEX,^https:\/\/api\.zhihu\.com\/search\/preset_words,REJECT
 URL-REGEX,^https:\/\/www\.zhihu\.com\/api\/v4\/search\/related_queries\/(article|answer)\/\d+,REJECT
 # 回答详情页 - 评论区顶部、下一个回答
 URL-REGEX,^https:\/\/api\.zhihu\.com\/comment_v5\/articles\/\d+\/list-headers,REJECT
