@@ -37,8 +37,8 @@ URL-REGEX,^https?:\/\/api\.zhihu\.com\/bazaar\/vip_tab\/header,REJECT
 # 首页 - 悬浮图标、顶部横幅、开屏广告、关注页推荐、推荐信息流、热榜信息流、热榜直播、回答底部卡片
 #- ^https:\/\/api\.zhihu\.com\/commercial_api\/(article\/\d+\/bottom-v2|banners_v3\/app_topstory_banner|launch_v2|real_time_launch_v2),REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/commercial_api\/banners_v3\/app_topstory_banner,REJECT
-URL-REGEX,^https:\/\/api\.zhihu\.com\/commercial_api\/launch_v2|real_time_launch_v2,REJECT
-URL-REGEX,^https:\/\/api\.zhihu\.com\/commercial_api\/(real_time_launch_v2),REJECT
+URL-REGEX,^https:\/\/api\.zhihu\.com\/commercial_api\/launch_v2,REJECT
+URL-REGEX,^https:\/\/api\.zhihu\.com\/commercial_api\/real_time_launch_v2,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/content-distribution-core\/bubble\/common\/settings,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/moments\/lastread|drama\/hot-drama-list,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/root\/window,REJECT
@@ -53,7 +53,8 @@ URL-REGEX,^https:\/\/api\.zhihu\.com\/unlimited\/go\/my_card,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/search\/preset_words - reject-dict
 URL-REGEX,^https:\/\/www\.zhihu\.com\/api\/v4\/search\/related_queries\/(article|answer)\/\d+,REJECT
 # 回答详情页 - 评论区顶部、下一个回答
-URL-REGEX,^https:\/\/api\.zhihu\.com\/comment_v5\/(articles|answers)\/\d+\/list-headers,REJECT
+URL-REGEX,^https:\/\/api\.zhihu\.com\/comment_v5\/articles\/\d+\/list-headers,REJECT
+URL-REGEX,^https:\/\/api\.zhihu\.com\/comment_v5\/answers\/\d+\/list-headers,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/prague\/related_suggestion_native\/feed\?,REJECT
 URL-REGEX,^https:\/\/api\.zhihu\.com\/v5\.1\/topics\/answer\/\d+\/relation,REJECT
 # 其他 - 服务器推送配置
