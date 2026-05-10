@@ -1,5 +1,34 @@
 依据https://surge.tel/09/2549/, 做了修改,替换成 vnstat 统计的流量
 
+其中的步骤也做必要的记录:
+
+#### apt 软件源列表并安装 Caddy
+apt update
+apt install caddy
+### 编写服务
+vim /etc/systemd/system/traffic.service
+
+将下面内容粘贴进去后保存
+
+```[Unit]
+Description=traffic
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/
+ExecStart=/root/traffic.sh
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### 编写运行程序
+vim /root/traffice.sh
+
 通过将原来粗暴读取系统网卡文件的逻辑替换为 `vnstat`，你可以很方便且更精准地统计**本月**的服务器流量。这不仅避免了 VPS 重启导致流量统计清零的问题，也简化了脚本中复杂的单位换算代码。
 
 下面是为修改好的 `traffic.sh` 脚本，以及相关的部署说明：
@@ -88,6 +117,16 @@ while true; do
   sleep 10
 done
 ```
+说明：此代码是通过VPS的49155端口进行监控，请确保该端口的开放，如果你熟悉代码，也可以根据自己需要进行修改
+
+运行
+进行完上述步骤后，执行下面指令运行
+
+systemctl enable --now traffic
+
+可以通过 bash traffic.sh 来直接运行
+通过 systemctl status traffic 来查看服务状态
+如果发现出来的时间不对，可以通过 timedatectl set-timezone Asia/Shanghai 来将vps时区调整为东八区。
 
 ### 第三步：重启服务使之生效
 修改并保存 `traffic.sh` 后，你需要重启守护进程使新的脚本生效。执行：
@@ -100,6 +139,21 @@ sudo systemctl restart traffic
 # 查看服务是否在正常运行
 sudo systemctl status traffic
 ```
+Surge模块安装
+将下面内容复制到本地模块中：
+```
+#!name=CatVPS
+#!desc=监控VPS流量信息和处理器、内存占用情况
+#!author= 面板和脚本部分@wuhu_zzz VPS端部分 @ATRI0828 由 @整点猫咪 进行整理
+#!howto=将模块内容复制到本地后根据自己VPS IP地址及端口修改 http://127.0.0.1:49155/traffic 部分进行使用ddl=后面接你的VPS到期时间，total=输入你的VPS每月流量数目
+[Panel]
+Cat VPS = script-name=CatVPS
+[Script]
+CatVPS = type=generic,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/CatVPS.js, argument = url=http://127.0.0.1:49155/traffic&title=Cat VPS&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=2100-01-01&total=10TB
+```
+
+将其中的 http://127.0.0.1:49155/traffic部分根据自己上面教程部分改为自己的VPS IP和端口即可使用。
+
 
 ### 主要更改点说明：
 1. **去掉了繁杂的 `calculate` 运算函数及写入本地 `tx/rx` 缓存记录的逻辑**：由 `vnstat` 的持久化数据代替，直接输出当月网络传输量。
